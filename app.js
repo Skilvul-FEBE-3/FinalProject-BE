@@ -32,6 +32,7 @@ app.use(
 );
 app.use(express.json());
 app.use(FileUpload())
+app.use(express.static("public"))
 app.use(allRouter);
 
 app.listen(process.env.PORT, () => {
