@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 module.exports = {
   getUsers: async (req, res) => {
     try {
-      const users = await User.find({}, "-__v -password -refresh_token");
+      const users = await User.find({}, "-__v -password");
       res.json(users);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ module.exports = {
   },
   getUserById: async (req, res) => {
     try {
-      const user = await User.findById(req.params.id, "-__v -password -refresh_token");
+      const user = await User.findById(req.params.id, "-__v -password");
       res.json(user);
     } catch (error) {
       res.status(404).json({ message: error.message });
