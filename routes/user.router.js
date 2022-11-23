@@ -12,7 +12,7 @@ const { verifyToken, adminOnly } = require('../middleware/authUser');
 
 router.get('/', verifyToken, adminOnly, getUsers);
 router.get('/:id', verifyToken, adminOnly, getUserById);
-router.post('/', verifyToken, adminOnly, addUser);
+router.post('/', addUser);
 router.patch('/:id', verifyToken, adminOnly, updateUser);
 router.delete('/:id', verifyToken, adminOnly, deleteUser);
 
