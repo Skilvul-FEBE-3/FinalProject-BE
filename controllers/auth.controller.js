@@ -54,6 +54,7 @@ module.exports = {
           id: userData._id,
           name: userData.name,
           email: userData.email,
+          role: userData.role
         },
         process.env.SECRET_KEY
       );
@@ -73,14 +74,9 @@ module.exports = {
   },
 
   Logout: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.sendStatus(204);
-    const userData = await User.findOne({
-      refresh_token: refreshToken,
-    }).exec();
-    if (!userData) return res.sendStatus(204);
-    await User.updateOne({ _id: userData._id }, { refresh_token: null });
-    res.clearCookie('refreshToken');
-    return res.sendStatus(200);
+    req.session.destroy((err) => {
+      if (err) return res.status(400).json({ msg: 'Tidak dapat logout' });
+      res.status(200).json({ msg: 'Anda telah logout' });
+    });
   },
 };
