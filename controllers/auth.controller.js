@@ -59,7 +59,6 @@ module.exports = {
       );
       // success login
       if (userData) {
-        req.session.userId = userData._id;
         res.json({
           message: 'success login',
           token,

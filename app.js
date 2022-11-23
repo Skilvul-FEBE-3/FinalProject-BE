@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const FileUpload = require('express-fileupload');
+const session = require('express-session')
 require('dotenv').config();
 const db = require('./config/db');
 const allRouter = require('./routes');
@@ -13,7 +14,16 @@ db.then(() => {
 }).catch((err) => {
   console.log(err);
 });
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: 'auto',
+    },
+  })
+);
 app.use(
   cors({
     credentials: true,
