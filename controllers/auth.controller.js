@@ -55,34 +55,8 @@ module.exports = {
           name: userData.name,
           email: userData.email,
         },
-        process.env.SECRET_KEY,
-        {
-          expiresIn: '1h',
-        }
+        process.env.SECRET_KEY
       );
-      // refresh token
-      const refreshToken = jwt.sign(
-        {
-          id: userData._id,
-          name: userData.name,
-          email: userData.email,
-        },
-        process.env.REFRESH_KEY,
-        {
-          expiresIn: '1d',
-        }
-      );
-      // update refresh key in db
-      await User.updateOne(
-        { _id: userData._id },
-        { refresh_token: refreshToken }
-      );
-      // coockie yang dikirimkan ke client
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
-        // secure: true
-      });
       // success login
       if (userData) {
         req.session.userId = userData._id;
@@ -95,33 +69,6 @@ module.exports = {
       res.status(500).json({
         message: error.message,
       });
-    }
-  },
-
-  RefreshToken: async (req, res) => {
-    try {
-      // get refresh token in cookie
-      const refreshToken = req.cookies.refreshToken;
-      if (!refreshToken) return res.sendStatus(401);
-      // find user by refresh token
-      const userData = await User.findOne({
-        refresh_token: refreshToken,
-      }).exec();
-      if (!userData) return res.sendStatus(403);
-      // verify refresh token
-      jwt.verify(refreshToken, process.env.REFRESH_KEY, (err, decoded) => {
-        if (err) return res.sendStatus(403);
-        const accessToken = jwt.sign(
-          { userId: userData._id, name: userData.name, email: userData.email },
-          process.env.SECRET_KEY,
-          {
-            expiresIn: '15s',
-          }
-        );
-        res.json({ accessToken });
-      });
-    } catch (error) {
-      console.log(error);
     }
   },
 
