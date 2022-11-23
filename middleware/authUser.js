@@ -8,6 +8,10 @@ module.exports = {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if (token == null) return res.sendStatus(401);
+    // memeriksa apakah sudah login dengan session
+    if (!req.session.userId) {
+      return res.status(401).json({ msg: 'Mohon login ke akun anda!' });
+    }
     // verify token
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) return res.sendStatus(403);
@@ -20,7 +24,10 @@ module.exports = {
       _id: req.session.userId,
       email: req.session.email,
     });
-    if (!user) return res.status(404).json({ message: 'User tidak ditemukan' });
+    if (!user)
+      return res
+        .status(404)
+        .json({ message: 'User tidak ditemukan, silakan login sebagai admin' });
     if (user.role != 'admin')
       return res.status(403).json({ message: 'Akses terlarang' });
     next();
