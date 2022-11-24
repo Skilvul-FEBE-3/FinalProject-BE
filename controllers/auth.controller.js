@@ -83,16 +83,9 @@ module.exports = {
   Me: async (req, res) => {
     const { token } = req.body;
     try {
-      let {id, name, email, role} = jwt.verify(token, process.env.SECRET_KEY);
+      let { id, name, email, role } = jwt.verify(token, process.env.SECRET_KEY);
       let user = await User.findById({ _id: id });
-      data = {
-        id,
-        name,
-        email,
-        role,
-        photo: user.profile_url,
-      };
-      res.status(200).json({ data });
+      res.status(200).json({ id, name, email, role, photo:user.profile_url });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
