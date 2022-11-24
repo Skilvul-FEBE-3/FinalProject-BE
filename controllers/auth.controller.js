@@ -54,7 +54,7 @@ module.exports = {
           id: userData._id,
           name: userData.name,
           email: userData.email,
-          role: userData.role
+          role: userData.role,
         },
         process.env.SECRET_KEY
       );
@@ -78,5 +78,16 @@ module.exports = {
       if (err) return res.status(400).json({ msg: 'Tidak dapat logout' });
       res.status(200).json({ msg: 'Anda telah logout' });
     });
+  },
+
+  Me: async (req, res) => {
+    const { token } = req.body;
+    try {
+      let { id, name, email, role } = jwt.verify(token, process.env.SECRET_KEY);
+      let user = await User.findById({ _id: id });
+      res.status(200).json({ id, name, email, role, photo:user.profile_url });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   },
 };
