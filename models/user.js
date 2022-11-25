@@ -28,7 +28,6 @@ const userSchema = new Schema({
   },
   profile_url: {
     type: String,
-    default: 'default.jpg'
   },
 });
 

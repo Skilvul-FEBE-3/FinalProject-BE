@@ -26,6 +26,10 @@ module.exports = {
     const saltRounds = 10;
     const hash = bcrypt.hashSync(data.password, saltRounds);
     data.password = hash;
+    const profile_url = `${req.protocol}://${req.get(
+      'host'
+    )}/images/default.jpg`;
+    data.profile_url = profile_url;
     const user = new User(data);
     try {
       const insertedUser = await user.save();

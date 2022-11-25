@@ -18,7 +18,10 @@ module.exports = {
     password = hash;
     // create new user
     const role = 'user';
-    const user = new User({ name, email, password, role });
+    const profile_url = `${req.protocol}://${req.get(
+      'host'
+    )}/images/default.jpg`;
+    const user = new User({ name, email, password, role, profile_url });
     // save & res
     try {
       const inserteduser = await user.save();
@@ -85,7 +88,7 @@ module.exports = {
     try {
       let { id, name, email, role } = jwt.verify(token, process.env.SECRET_KEY);
       let user = await User.findById({ _id: id });
-      res.status(200).json({ id, name, email, role, photo:user.profile_url });
+      res.status(200).json({ id, name, email, role, photo: user.profile_url });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
