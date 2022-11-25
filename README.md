@@ -48,6 +48,20 @@ https://finalproject-be-production.up.railway.app
 
 > login dengan email dan password yang telah di daftar mengembalikan mengembalikan token jwt yang berisi id, name, email, role
 
+### `POST` me
+
+```
+/auth/me
+```
+
+### Body raw (json)
+
+```json
+{
+  "token": "<token>"
+}
+```
+
 ### `DELETE` Logout
 
 ```
@@ -114,7 +128,7 @@ Bodyraw (json)
 /users/<userId>
 ```
 
-### ` POST` update img profile
+### `Patch` update img profile
 
 Body form-data
 
@@ -123,3 +137,59 @@ Body form-data
 ```
 
 > 'Content-type': 'multipart/form-data' dengan key `file`
+
+## 3. Blog
+
+## 4. Video
+
+## 5. FAQ
+
+### `GET` get FAQs
+
+```
+/faq
+```
+
+###### `limit and page`
+
+```
+/faq?limit=1&page=1
+```
+
+> Dapat menyeting berapa jumlah data yang ingin ditampilkan
+
+### `POST` create FAQ
+
+```
+/faq
+```
+
+Body raw (json)
+
+```json
+{
+  "question": "testing pertanyaan10",
+  "answer": "testing jawaban"
+}
+```
+
+### `PATCH` create FAQ
+
+```
+/faq/<faqId>
+```
+
+Body raw (json)
+
+```json
+{
+  "question": "testing pertanyaan10",
+  "answer": "testing jawaban"
+}
+```
+
+### `DELETE` delete FAQ
+
+```
+/faq/<faqId>
+```
