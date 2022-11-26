@@ -1,4 +1,6 @@
 const Blog = require("../models/blogs");
+const Comment = require("../models/blogs");
+
 module.exports= {
 
     getAllBlog: async (req, res)=>{
@@ -34,13 +36,21 @@ module.exports= {
     },
 
     postBlog: async (req, res)=>{
-        const data = req.body
+        const data = {
+            image : {
+            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+            contentType: ["image/png", "image/jpeg"]
+        },
+            judul : req.body.judul,
+            subJudul : req.body.subJudul,
+            deskripsi : req.body.deskripsi,
+        }
         const blog = await Blog(data)
 
         try {
-            blog.save()
+            blog.create(data)
             res.status(200).json({
-            message : "luluk pintar"
+            message : "succes"
             })
         } catch (error) {
             res.status(404).json({
@@ -66,7 +76,7 @@ module.exports= {
         }
     },
 
-    deleteBlogById: async (req, res)=>{
+    deleteBlogById: async (req, res, next)=>{
         const { id } = req.params
         console.log(id);
         try {
@@ -79,6 +89,20 @@ module.exports= {
             res.status(404).json({
             message: "error"
         })
+        }
+    },
+    postComment: async (req,res) => {
+        const data = req.body
+        const comment = await Comment(data)
+        try {
+            comment.create(data)
+            res.status(200).json({
+            message : "succes"
+            })
+        } catch (error) {
+            res.status(404).json({
+            message : "error"
+            })
         }
     }
 }
