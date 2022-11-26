@@ -18,7 +18,10 @@ module.exports = {
     password = hash;
     // create new user
     const role = 'user';
-    const user = new User({ name, email, password, role });
+    const profile_url = `${req.protocol}://${req.get(
+      'host'
+    )}/images/default.jpg`;
+    const user = new User({ name, email, password, role, profile_url });
     // save & res
     try {
       const inserteduser = await user.save();
@@ -54,35 +57,10 @@ module.exports = {
           id: userData._id,
           name: userData.name,
           email: userData.email,
+          role: userData.role,
         },
-        process.env.SECRET_KEY,
-        {
-          expiresIn: '1h',
-        }
+        process.env.SECRET_KEY
       );
-      // refresh token
-      const refreshToken = jwt.sign(
-        {
-          id: userData._id,
-          name: userData.name,
-          email: userData.email,
-        },
-        process.env.REFRESH_KEY,
-        {
-          expiresIn: '1d',
-        }
-      );
-      // update refresh key in db
-      await User.updateOne(
-        { _id: userData._id },
-        { refresh_token: refreshToken }
-      );
-      // coockie yang dikirimkan ke client
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000,
-        // secure: true
-      });
       // success login
       if (userData) {
         req.session.userId = userData._id;
@@ -98,42 +76,21 @@ module.exports = {
     }
   },
 
-  RefreshToken: async (req, res) => {
-    try {
-      // get refresh token in cookie
-      const refreshToken = req.cookies.refreshToken;
-      if (!refreshToken) return res.sendStatus(401);
-      // find user by refresh token
-      const userData = await User.findOne({
-        refresh_token: refreshToken,
-      }).exec();
-      if (!userData) return res.sendStatus(403);
-      // verify refresh token
-      jwt.verify(refreshToken, process.env.REFRESH_KEY, (err, decoded) => {
-        if (err) return res.sendStatus(403);
-        const accessToken = jwt.sign(
-          { userId: userData._id, name: userData.name, email: userData.email },
-          process.env.SECRET_KEY,
-          {
-            expiresIn: '15s',
-          }
-        );
-        res.json({ accessToken });
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  Logout: async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) return res.status(400).json({ msg: 'Tidak dapat logout' });
+      res.status(200).json({ msg: 'Anda telah logout' });
+    });
   },
 
-  Logout: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) return res.sendStatus(204);
-    const userData = await User.findOne({
-      refresh_token: refreshToken,
-    }).exec();
-    if (!userData) return res.sendStatus(204);
-    await User.updateOne({ _id: userData._id }, { refresh_token: null });
-    res.clearCookie('refreshToken');
-    return res.sendStatus(200);
+  Me: async (req, res) => {
+    const { token } = req.body;
+    try {
+      let { id, name, email, role } = jwt.verify(token, process.env.SECRET_KEY);
+      let user = await User.findById({ _id: id });
+      res.status(200).json({ id, name, email, role, photo: user.profile_url });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   },
 };

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+const FileUpload = require('express-fileupload');
+const session = require('express-session')
 require('dotenv').config();
 const db = require('./config/db');
 const allRouter = require('./routes');
@@ -14,7 +14,6 @@ db.then(() => {
 }).catch((err) => {
   console.log(err);
 });
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -28,11 +27,12 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: ['http://127.0.0.1:5173','http://localhost:3000'],
+    origin: ['http://127.0.0.1:5173', 'http://localhost:3000'],
   })
 );
-app.use(cookieParser());
 app.use(express.json());
+app.use(FileUpload())
+app.use(express.static("public"))
 app.use(allRouter);
 
 app.listen(process.env.PORT, () => {

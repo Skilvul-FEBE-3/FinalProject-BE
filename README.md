@@ -1,71 +1,207 @@
 # Backend-Mental-Hack
-Mental Hack API
 
-# mental-hack-api
-mental hack api nih
+## Mental Hack API
 
-grup project restful API Express
+# API Spesification Mental-Hack
 
-1. BRD
-aplikasi apa yang akan di buat
-problem apa yang ingin diselesaikan
-fitur apa aja yang disiapkan dari segi backend
-User dari aplikasi siapa aja
-Timeline pengerjaan
-Business flow 
-user flow
+```
+https://finalproject-be-production.up.railway.app
+```
 
-2. BRD dalam bentuk profer (notion, whimsical, cofluence)
+---
 
-3. membuat UI/UX dalam bentuk wireframe ga udah yang wah atau keren
+## 1. Auth
 
-4. membuat API Specification
-outline api spec
-- list endpoint dan http verb
-- request and response
-- format JSON
+### `POST` Register
 
-5. Design Database / Schema diagram
-ERD Plus
-Draw io
-Diagrams
-Plant UML
-DB Diagram
-SQLDBM
-Lucidchard
+```
+/auth/register
+```
 
-trello
+### Body raw (json)
 
-5.1. mysql atau monggo / sequelize atau mongoos e
+```json
+{
+  "name": "john doe",
+  "email": "john@gmail.com",
+  "password": "john",
+  "confPassword": "john"
+}
+```
 
-6. Masuk Ke Codingan
-yang harus ada
-- Authentication & Authorization
-- ga bisa di akses kalo admin
-- Validations
+> menambahkan user baru dengan role `user` dan profile img `default.jpg`
 
-7. Documentation
-API Documentation
-- Postman
-- Swagger
-- Stoplight
+### `POST` Login
 
-8. Deployment
-- heroku
+```
+/auth/login
+```
 
-9. Online Database Service
-(MYSQL)
-- https://remotemysql.com/
-- https://www.freemysqlhosting.net/
-- https://db4free.net/
-(MONGODB)
-- MongoDB Atlas
+### Body raw (json)
 
-10. slidedeck & presentation
-- BRD
-- aplikasinya
-- problemnya
-- api spesification
-- demo alur nya seperti apa
-- postman
+```json
+{
+  "email": "admin@gmail.com",
+  "password": "admin"
+}
+```
 
+> login dengan email dan password yang telah di daftar mengembalikan mengembalikan token jwt yang berisi id, name, email, role
+
+### `POST` me
+
+```
+/auth/me
+```
+
+### Body raw (json)
+
+```json
+{
+  "token": "<token>"
+}
+```
+
+### `DELETE` Logout
+
+```
+/auth/logout
+```
+
+---
+
+---
+
+## 2. User
+
+> `fitur crud user harus rolenya admin`
+
+### `GET` Get all Users
+
+```
+/user
+```
+
+### `GET` Get user by id
+
+```
+/users/<userId>
+```
+
+### `POST` Create user
+
+```
+/users
+```
+
+Bodyraw (json)
+
+```json
+{
+  "name": "admin",
+  "email": "admin@gmail.com",
+  "password": "admin",
+  "role": "admin"
+}
+```
+
+### `PATCH` Update user
+
+```
+/users/<userId>
+```
+
+```json
+{
+  "name": "dwi",
+  "email": "dwi@gmail.com",
+  "password": "dwi",
+  "role": "user"
+}
+```
+
+> - bisa salah satu yang di update
+
+### `DELETE` delete user
+
+```
+/users/<userId>
+```
+
+### `Patch` update img profile
+
+Body form-data
+
+```
+/users/updateprofilepicture
+```
+
+> 'Content-type': 'multipart/form-data' dengan key `file`
+
+## 3. Blog
+
+## 4. Video
+
+## 5. FAQ
+
+### `GET` get FAQs
+
+```
+/faq
+```
+
+###### `limit and page`
+
+```
+/faq?limit=1&page=1
+```
+
+> Dapat menyeting berapa jumlah data yang ingin ditampilkan
+
+###### `filtering question`
+
+```
+/faq?question=<question_value>
+```
+
+> anda bisa memakai opsi di atas
+
+```
+/faq?limit=1&page=5&question=example
+```
+
+### `POST` create FAQ
+
+```
+/faq
+```
+
+Body raw (json)
+
+```json
+{
+  "question": "testing pertanyaan10",
+  "answer": "testing jawaban"
+}
+```
+
+### `PATCH` create FAQ
+
+```
+/faq/<faqId>
+```
+
+Body raw (json)
+
+```json
+{
+  "question": "testing pertanyaan10",
+  "answer": "testing jawaban"
+}
+```
+
+### `DELETE` delete FAQ
+
+```
+/faq/<faqId>
+```
