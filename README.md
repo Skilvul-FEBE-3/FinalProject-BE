@@ -158,6 +158,18 @@ Body form-data
 
 > Dapat menyeting berapa jumlah data yang ingin ditampilkan
 
+###### `filtering question`
+
+```
+/faq?question=<question_value>
+```
+
+> anda bisa memakai opsi di atas
+
+```
+/faq?limit=1&page=5&question=example
+```
+
 ### `POST` create FAQ
 
 ```
