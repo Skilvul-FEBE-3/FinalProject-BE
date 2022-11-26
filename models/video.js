@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const videoSchema = new Schema({
-  link: {
+  videoId: {
     type: String,
     require: true,
   },
