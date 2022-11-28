@@ -7,11 +7,11 @@ const {
     deleteBlogById,
     postComment,
     getAllBlogCommentById,
-    deleteBlogCommentById
+    deleteBlogCommentById,
+    updateCommentById
 } = require('../controllers/blog.controller');
 const router = express.Router();
 const { verifyToken, adminOnly } = require('../middleware/authUser');
-// const uploadFiles = require('../uploadImage')
 
 router.get("/", verifyToken, getAllBlog)
 router.get("/:id", verifyToken, getBlogById)
@@ -21,6 +21,5 @@ router.delete("/:id", verifyToken, adminOnly, deleteBlogById)
 router.post("/:id/comment", verifyToken, postComment)
 router.get("/:id/comment", verifyToken, getAllBlogCommentById)
 router.delete("/:id/comment/:idComment", verifyToken, deleteBlogCommentById)
-
-
+router.patch("/:id/comment/:idComment", verifyToken, updateCommentById)
 module.exports = router

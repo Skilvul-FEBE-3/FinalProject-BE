@@ -256,6 +256,35 @@ module.exports= {
                   })
             }
     },
+
+    updateCommentById: async (req, res)=>{
+        const {idComment} = req.params
+        const data = req.body
+        try {
+            const upComment = await Blog.findoneAndUpdate(idComment ,{
+                $push: {
+                  comment: data,
+                },
+              });
+              await upComment.save()
+
+            //   const blog = await Blog.findByIdAndUpdate(id, {
+            //     $push: {
+            //       comment: upComment,
+            //     },
+            //   });
+            //   await blog.save();
+              
+              res.status(200).json({
+                message: "success"
+            })
+        } catch (error) {
+            res.status(404).json({
+            message: "error"
+        })
+        }
+    },
+
     deleteBlogCommentById : async (req, res) => {
         const {id,idComment} = req.params
         try {
