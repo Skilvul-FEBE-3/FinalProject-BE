@@ -160,6 +160,7 @@ Body form-data
 /blog
 ```
 
+```JSON
 body-raw (JSON)
 {
 "image" : "gambar2.jpg",
@@ -168,12 +169,25 @@ body-raw (JSON)
 "description" : "ini description2",
 "createdBy" : "637df1bff73d4c3f5d47eaf8"
 }
+```
 
 ### `PATCH ` blog by id **HANYA ADMIN**
 
 ```
 /blog/:id
 ```
+
+```JSON
+body-raw (JSON)
+{
+"image" : "gambar2.jpg",
+"title" : "ini judul2",
+"subTitle" : "ini subTitle2",
+"description" : "ini description2",
+"createdBy" : "637df1bff73d4c3f5d47eaf8"
+}
+```
+bisa edit salah satu
 
 ### `DELETE` blog by id **HANYA ADMIIN**
 
@@ -190,10 +204,12 @@ body-raw (JSON)
 ```
 
 body-raw (JSON)
+```JSON
 {
 "content" : "cek komen",
 "postedBy" : "637df1bff73d4c3f5d47eaf8"
 }
+```
 
 ### `GET` comment by id blog
 
