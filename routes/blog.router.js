@@ -5,7 +5,9 @@ const {
     postBlog,
     updateBlogById,
     deleteBlogById,
-    postComment
+    postComment,
+    getAllBlogCommentById,
+    deleteBlogCommentById
 } = require('../controllers/blog.controller');
 const router = express.Router();
 const { verifyToken, adminOnly } = require('../middleware/authUser');
@@ -16,6 +18,9 @@ router.get("/:id", verifyToken, getBlogById)
 router.post("/", verifyToken, adminOnly, postBlog)
 router.patch("/:id", verifyToken, adminOnly, updateBlogById)
 router.delete("/:id", verifyToken, adminOnly, deleteBlogById)
-router.post("/comment", verifyToken, postComment)
+router.post("/:id/comment", verifyToken, postComment)
+router.get("/:id/comment", verifyToken, getAllBlogCommentById)
+router.delete("/:id/comment/:idComment", verifyToken, deleteBlogCommentById)
+
 
 module.exports = router
