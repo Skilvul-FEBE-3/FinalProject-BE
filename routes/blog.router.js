@@ -22,5 +22,4 @@ router.post("/:id/comment", verifyToken, postComment)
 router.get("/:id/comment", verifyToken, getAllBlogCommentById)
 router.delete("/:id/comment/:idComment", verifyToken, deleteBlogCommentById)
 
-
 module.exports = router
