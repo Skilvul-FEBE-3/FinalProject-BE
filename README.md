@@ -140,6 +140,73 @@ Body form-data
 
 ## 3. Blog
 
+> > BLOG
+
+### `GET` all Blog
+
+```
+/blog
+```
+
+### `GET` blog by id
+
+```
+/blog/:id
+```
+
+### `POST` blog **HANYA ADMIN**
+
+```
+/blog
+```
+
+body-raw (JSON)
+{
+"image" : "gambar2.jpg",
+"title" : "ini judul2",
+"subTitle" : "ini subTitle2",
+"description" : "ini description2",
+"createdBy" : "637df1bff73d4c3f5d47eaf8"
+}
+
+### `PATCH ` blog by id **HANYA ADMIN**
+
+```
+/blog/:id
+```
+
+### `DELETE` blog by id **HANYA ADMIIN**
+
+```
+/blog/:id
+```
+
+> > BLOG COMMENT
+
+### `POST` comment
+
+```
+/:id/comment
+```
+
+body-raw (JSON)
+{
+"content" : "cek komen",
+"postedBy" : "637df1bff73d4c3f5d47eaf8"
+}
+
+### `GET` comment by id blog
+
+```
+/:id/comment
+```
+
+### `DELETE` comment by id
+
+```
+/:id/comment/:idComment
+```
+
 ## 4. Video
 
 ## 5. FAQ
