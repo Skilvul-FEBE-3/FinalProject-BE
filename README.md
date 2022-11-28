@@ -187,6 +187,7 @@ body-raw (JSON)
 "createdBy" : "637df1bff73d4c3f5d47eaf8"
 }
 ```
+
 bisa edit salah satu
 
 ### `DELETE` blog by id **HANYA ADMIIN**
@@ -204,6 +205,7 @@ bisa edit salah satu
 ```
 
 body-raw (JSON)
+
 ```JSON
 {
 "content" : "cek komen",
@@ -223,7 +225,6 @@ body-raw (JSON)
 /:id/comment/:idComment
 ```
 
-=======
 ## 4. Video
 
 ## 5. FAQ
