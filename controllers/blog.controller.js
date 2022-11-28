@@ -175,7 +175,7 @@ module.exports= {
         const blog = await Blog(data);
 
         try {
-            saveBlog=  await blog.save()
+            saveBlog=  await Blog.create(blog)
             res.status(200).json(saveBlog)
         } catch (error) {
             res.status(404).json({
