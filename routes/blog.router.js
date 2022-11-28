@@ -11,7 +11,6 @@ const {
 } = require('../controllers/blog.controller');
 const router = express.Router();
 const { verifyToken, adminOnly } = require('../middleware/authUser');
-// const uploadFiles = require('../uploadImage')
 
 router.get("/", verifyToken, getAllBlog)
 router.get("/:id", verifyToken, getBlogById)
