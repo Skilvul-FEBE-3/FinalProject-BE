@@ -2,11 +2,47 @@ const Faq = require('../models/faq');
 
 module.exports = {
   getFaqs: async (req, res) => {
+    // destructure page and limit and set default values
+    let { page = 1, limit, question = false } = req.query;
+
     try {
-      const faqs = await Faq.find({}, '-__v');
-      res.json(faqs);
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+      // get total documents in the Posts collection
+      let count = await Faq.countDocuments();
+      if (question) {
+        count = await Faq.countDocuments({
+          question: { $regex: '.*' + question + '.*' },
+        });
+      }
+      // if limit not set
+      if (!limit) {
+        limit = count;
+      }
+      // if page gt page count
+      const pageCount = Math.ceil(count / limit);
+      if (page > pageCount) {
+        page = pageCount;
+      }
+      // execute query with page, limit, and filter values
+      let faqs = await Faq.find()
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+      if (question) {
+        faqs = await Faq.find({
+          question: { $regex: '.*' + question + '.*' },
+        })
+          .limit(limit * 1)
+          .skip((page - 1) * limit)
+          .exec();
+      }
+      // return response with posts, total pages, and current page
+      res.json({
+        faqs,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+      });
+    } catch (err) {
+      console.error(err.message);
     }
   },
   addFaq: async (req, res) => {
