@@ -3,6 +3,7 @@ const cors = require('cors');
 const FileUpload = require('express-fileupload');
 const session = require('express-session')
 require('dotenv').config();
+const bodyParser = require('body-parser');
 const db = require('./config/db');
 const allRouter = require('./routes');
 
@@ -33,6 +34,8 @@ app.use(
 app.use(express.json());
 app.use(FileUpload())
 app.use(express.static("public"))
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 app.use(allRouter);
 
 app.listen(process.env.PORT, () => {
