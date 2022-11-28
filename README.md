@@ -101,7 +101,7 @@ Bodyraw (json)
   "name": "admin",
   "email": "admin@gmail.com",
   "password": "admin",
-  "role": "admin"
+  "role": "admin" // enum (user / admin)
 }
 ```
 
@@ -116,7 +116,7 @@ Bodyraw (json)
   "name": "dwi",
   "email": "dwi@gmail.com",
   "password": "dwi",
-  "role": "user"
+  "role": "user" enum (user / admin)
 }
 ```
 
@@ -207,6 +207,7 @@ body-raw (JSON)
 /:id/comment/:idComment
 ```
 
+=======
 ## 4. Video
 
 ## 5. FAQ
