@@ -1,4 +1,4 @@
-const Faq = require('../models/faq');
+const Faq = require("../models/faq");
 
 module.exports = {
   getFaqs: async (req, res) => {
@@ -10,7 +10,7 @@ module.exports = {
       let count = await Faq.countDocuments();
       if (question) {
         count = await Faq.countDocuments({
-          question: { $regex: '.*' + question + '.*' },
+          question: { $regex: ".*" + question + ".*", $options: "i" },
         });
       }
       // if limit not set
@@ -29,7 +29,7 @@ module.exports = {
         .exec();
       if (question) {
         faqs = await Faq.find({
-          question: { $regex: '.*' + question + '.*' },
+          question: { $regex: ".*" + question + ".*", $options: "i" },
         })
           .limit(limit * 1)
           .skip((page - 1) * limit)
@@ -73,7 +73,7 @@ module.exports = {
     try {
       const deleteFaq = await Faq.deleteOne({ _id: req.params.id });
       res.status(200).json({
-        message: 'User Deleted Successfully',
+        message: "User Deleted Successfully",
         data: deleteFaq,
       });
     } catch (error) {
