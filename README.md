@@ -201,7 +201,7 @@ bisa edit salah satu
 ### `POST` comment
 
 ```
-/:id/comment
+/blog/:id/comment
 ```
 
 body-raw (JSON)
@@ -216,16 +216,97 @@ body-raw (JSON)
 ### `GET` comment by id blog
 
 ```
-/:id/comment
+/blog/:id/comment
 ```
 
 ### `DELETE` comment by id
 
 ```
-/:id/comment/:idComment
+/blog/:id/comment/:idComment
 ```
 
 ## 4. Video
+
+> > VIDEO
+
+### `GET` all video
+
+```
+/video
+```
+
+### `GET` video by id
+
+```
+/video/:id
+```
+
+### `POST` video **HANYA ADMIN**
+
+```
+/video
+```
+
+```JSON
+body-raw (JSON)
+{
+  "videoId": "ini adalah videoId",
+  "judul": "ini adalah judul",
+  "deskripsi": "ini adalah deskripsi"
+}
+```
+
+### `PATCH ` video by id **HANYA ADMIN**
+
+```
+/video/:id
+```
+
+```JSON
+body-raw (JSON)
+{
+  "videoId": "masukkan id video yang akan diupdate",
+  "judul": "masukkan judul yang akan diupdate",
+  "deskripsi": "masukkan deskripsi yang akan diupdate"
+}
+```
+
+karena menggunakan patch, data yang diedit bisa salah satu saja.
+
+### `DELETE` video by id **HANYA ADMIIN**
+
+```
+/video/:id
+```
+
+> > VIDEO COMMENT
+
+### `POST` comment
+
+```
+/video/:id/comment
+```
+
+body-raw (JSON)
+
+```JSON
+{
+  "commentContent": "ini adalah isi comment",
+  "postedBy": "ini adalah id user"
+}
+```
+
+### `GET` comment by id video
+
+```
+/video/:id/comment
+```
+
+### `DELETE` comment by id video
+
+```
+/video/:id/comment/:idComment
+```
 
 ## 5. FAQ
 
