@@ -1,10 +1,5 @@
 const Blog = require("../models/blogs");
 const User = require('../models/user');
-const fs = require('fs');
-const path = require('path');
-const formidable = require('formidable');
-// const fileUpload = require("express-fileupload");
-// const uploadFiles = require('../uploadImage')
 
 module.exports= {
 
@@ -36,139 +31,6 @@ module.exports= {
        
     },
 
-    // multer
-    // postBlog: async (req, res)=>{
-    //     const data = req.files;
-    //     console.log(data);
-        
-
-    //     // const data = {
-    //     //     image : {
-    //     //     data: fs.readFileSync(path.join('/uploadImage/' + req.files.uploadFiles)),
-    //     //     contentType: ["image/png", "image/jpeg"]
-    //     // },
-    //     //     judul : req.body.judul,
-    //     //     subJudul : req.body.subJudul,
-    //     //     deskripsi : req.body.deskripsi,
-    //     // }
-
-    //     // const blog = await Blog(data)
-
-    //     try {
-    //         blog.create(data)
-    //         res.status(200).json({
-    //         message : "success"
-    //         })
-    //     } catch (error) {
-    //         res.status(404).json({
-    //         message : "error"
-    //         })
-    //     }
-       
-    // },
-
-
-    // // formidable
-    // postBlog: async (req, res, next)=>{
-    //     // membuat objek form dari formidable untuk mengambil data dari form
-    //     const data={
-    //         form :new formidable.IncomingForm(),
-    //         title : req.body.title,
-    //         subTitle : req.body.subTitle,
-    //         description : req.body.description,
-    //         createdBy : req.body.createdBy
-    //     }
-    //     console.log(data);
-    //     const uploadsFolder = path.join(__dirname+'./public/imageBlog')
-       
-    //     data.form.uploadDir = uploadsFolder
-
-    //     data.form.parse(req, async (err, fields, files)=>{
-
-    //         if(err){
-    //             console.log("error parsing files");
-    //             return res.satus(400).json({
-    //                 message: "error parsing files"
-    //             })
-    //         }
-
-    //         const file = files.file
-    //         const isFileValid = (file) => {
-    //             const type = file.type.split("/").pop();
-    //             const validTypes = ["jpg", "jpeg", "png", "pdf"];
-    //             if (validTypes.indexOf(type) === -1) {
-    //               return false;
-    //             }
-    //             return true;
-    //           };
-    //         const isValid =isFileValid(file)
-
-    //         const fileName = encodeURIComponent(file.name.replace(/\s/g,'-'))
-
-    //         if(!isValid){
-    //             return res.status(400).json({
-    //                 message: "file"
-    //             })
-    //         }
-    //         try{
-    //             fs.renameSync(file.path,join(uploadsFolder, fileName))
-    //         }catch (error){
-    //             console.log(error);
-    //         }
-
-    //         try {
-    //             // stores the fileName in the database
-    //             const newFile = await File.create({
-    //               name: `files/${fileName}`,
-    //             });
-    //             return res.status(200).json({
-    //               status: "success",
-    //               message: "File created successfully!!",
-    //             });
-    //           } catch (error) {
-    //             res.json({
-    //               error,
-    //             });
-    //           }
-
-    //     })
-    //     // form.parse(req, function (err, fields, files) {
-    //     //     const oldpath = files.image.path;
-    //     //     const newpath = __dirname + "./public//uploads/" + files.image.name;
-    //     //     const rawData = fs.readFileSync(oldpath)
-
-    //     //     fs.writeFile(newpath, rawData, function (err) {
-    //     //         if (err) { throw err; }
-    //     //         console.log('file uploaded successfully');
-    //     //         return res.end("file uploaded successfully");
-    //     //     });
-    //     // });
-    // },
-    // //     const data = {
-    // //         image : {
-    // //         data: fs.readFileSync(path.join('/uploadImage/' + req.files.uploadFiles)),
-    // //         contentType: ["image/png", "image/jpeg"]
-    // //     },
-    // //         judul : req.body.judul,
-    // //         subJudul : req.body.subJudul,
-    // //         deskripsi : req.body.deskripsi,
-    // //     }
-
-    // //     const blog = await Blog(data)
-
-    // //     try {
-    // //         blog.create(data)
-    // //         res.status(200).json({
-    // //         message : "succes"
-    // //         })
-    // //     } catch (error) {
-    // //         res.status(404).json({
-    // //         message : "error"
-    // //         })
-    // //     }
-       
-    // // },
-
     // filesatck
     postBlog: async (req, res)=>{
         const data = req.body
@@ -191,12 +53,12 @@ module.exports= {
         const update = await Blog.updateOne({_id: id},data);
         try {
             res.status(200).json({
-                message: "Selamat tidak error *emot jempol",
+                message: "Success",
                 data : update
             })
         } catch (error) {
             res.status(404).json({
-                message: "error bang"
+                message: "error"
             })
         }
     },
@@ -207,7 +69,7 @@ module.exports= {
         try {
             await Blog.deleteOne({_id: id})
             res.status(200).json({
-            message: "Selamat tidak error *emot jempol"
+            message: "Success"
             
         })
         } catch (error) {
@@ -267,13 +129,6 @@ module.exports= {
                 },
               });
               await upComment.save()
-
-            //   const blog = await Blog.findByIdAndUpdate(id, {
-            //     $push: {
-            //       comment: upComment,
-            //     },
-            //   });
-            //   await blog.save();
               
               res.status(200).json({
                 message: "success"
