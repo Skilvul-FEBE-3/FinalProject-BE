@@ -63,7 +63,6 @@ module.exports = {
       );
       // success login
       if (userData) {
-        req.session.userId = userData._id;
         res.json({
           message: 'success login',
           token,
@@ -77,6 +76,7 @@ module.exports = {
   },
 
   Logout: async (req, res) => {
+    localStorage.removeItem('token')
     req.session.destroy((err) => {
       if (err) return res.status(400).json({ msg: 'Tidak dapat logout' });
       res.status(200).json({ msg: 'Anda telah logout' });
