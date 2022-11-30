@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const FileUpload = require('express-fileupload');
-const session = require('express-session')
+const session = require('express-session');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const db = require('./config/db');
@@ -15,6 +15,7 @@ db.then(() => {
 }).catch((err) => {
   console.log(err);
 });
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -32,10 +33,10 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(FileUpload())
-app.use(express.static("public"))
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+app.use(FileUpload());
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(allRouter);
 
 app.listen(process.env.PORT, () => {
