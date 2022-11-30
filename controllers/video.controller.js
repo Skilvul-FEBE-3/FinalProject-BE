@@ -2,9 +2,42 @@ const Video = require("../models/video");
 
 module.exports = {
   getAllVideo: async (req, res) => {
+    let { judul = false, page = 1, limit } = req.query;
+
     try {
-      const video = await Video.find({});
-      res.json(video);
+      let count = await Video.countDocuments();
+      if (judul) {
+        count = await Video.countDocuments({
+          judul: { $regex: ".*" + judul + ".*", $options: "i" },
+        });
+      }
+      // if limit not set
+      if (!limit) {
+        limit = count;
+      }
+      // if page gt page count
+      const pageCount = Math.ceil(count / limit);
+      if (page > pageCount) {
+        page = pageCount;
+      }
+
+      let video = await Video.find()
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
+      if (judul) {
+        video = await Video.find({
+          judul: { $regex: ".*" + judul + ".*", $options: "i" },
+        })
+          .limit(limit * 1)
+          .skip((page - 1) * limit)
+          .exec();
+      }
+      res.json({
+        video,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
