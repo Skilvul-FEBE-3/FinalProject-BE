@@ -13,8 +13,8 @@ const {
 const router = express.Router();
 const { verifyToken, adminOnly } = require('../middleware/authUser');
 
-router.get("/", verifyToken, getAllBlog)
-router.get("/:id", verifyToken, getBlogById)
+router.get("/", getAllBlog)
+router.get("/:id", getBlogById)
 router.post("/", verifyToken, adminOnly, postBlog)
 router.patch("/:id", verifyToken, adminOnly, updateBlogById)
 router.delete("/:id", verifyToken, adminOnly, deleteBlogById)
