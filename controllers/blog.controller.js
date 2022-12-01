@@ -7,7 +7,7 @@ module.exports = {
 
     try {
       // execute query with page, limit, and filter values
-      let blog = await Blog.find()
+      let blog = await Blog.find({}, '-__v')
         .populate('createdBy', '-__v -email -password -role -_id -profile_url')
         .exec();
       if (title) {
