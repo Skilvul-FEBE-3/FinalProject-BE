@@ -1,6 +1,7 @@
 const Blog = require("../models/blogs");
 const User = require('../models/user');
 
+
 module.exports= {
 
     getAllBlog: async (req, res)=>{
