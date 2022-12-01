@@ -3,8 +3,7 @@ const User = require('../models/user');
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
-// const fileUpload = require("express-fileupload");
-// const uploadFiles = require('../uploadImage')
+
 
 module.exports= {
 
