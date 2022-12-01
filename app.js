@@ -29,7 +29,12 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: ['http://127.0.0.1:5173', 'http://localhost:3000'],
+    origin: [
+      'http://127.0.0.1:5173',
+      'http://localhost:3000',
+      'https://final-project-757nu7zyf-mental-hack.vercel.app',
+      'https://final-project-ma8iyu4bm-mental-hack.vercel.app',
+    ],
   })
 );
 app.use(express.json());
