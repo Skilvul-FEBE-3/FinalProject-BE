@@ -7,6 +7,9 @@ const {
   addVideo,
   updateVideoById,
   deleteVideoById,
+  getAllCommentByVideo,
+  addComment,
+  deleteComment,
 } = require("../controllers/video.controller");
 const { verifyToken, adminOnly } = require("../middleware/authUser");
 
@@ -15,5 +18,8 @@ router.get("/:id", verifyToken, getVideoById);
 router.post("/", verifyToken, adminOnly, addVideo);
 router.patch("/:id", verifyToken, adminOnly, updateVideoById);
 router.delete("/:id", verifyToken, adminOnly, deleteVideoById);
+router.get("/:id/comment", verifyToken, getAllCommentByVideo);
+router.post("/:id/comment", verifyToken, addComment);
+router.delete("/:id/comment/:commentID", verifyToken, adminOnly, deleteComment);
 
 module.exports = router;
