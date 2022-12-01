@@ -7,7 +7,9 @@ module.exports = {
 
     try {
       // execute query with page, limit, and filter values
-      let blog = await Blog.find().exec();
+      let blog = await Blog.find()
+        .populate('createdBy', '-__v -email -password -role -_id -profile_url')
+        .exec();
       if (title) {
         blog = await Blog.find({
           title: { $regex: '.*' + title + '.*', $options: 'i' },
@@ -25,7 +27,10 @@ module.exports = {
   getBlogById: async (req, res) => {
     const { id } = req.params;
 
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findById(id).populate(
+      'createdBy',
+      '-__v -email -password -role -_id -profile_url'
+    );
     try {
       res.status(200).json({
         message: 'success',
