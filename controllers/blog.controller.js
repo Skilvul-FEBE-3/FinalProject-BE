@@ -121,6 +121,9 @@ module.exports = {
     const blog = await Blog.findById(
       id,
       '-image -title -subTitle -description -dateCreated -createdBy'
+    ).populate(
+      'comment.postedBy',
+      '-_id -email -password -role -profile_url -__v'
     );
     console.log(blog);
     try {
