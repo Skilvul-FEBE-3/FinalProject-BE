@@ -40,9 +40,11 @@ module.exports = {
   },
   updateUser: async (req, res) => {
     let data = req.body;
-    const saltRounds = 10;
-    const hash = bcrypt.hashSync(data.password, saltRounds);
-    data.password = hash;
+    if (data.password) {
+      const saltRounds = 10;
+      const hash = bcrypt.hashSync(data.password, saltRounds);
+      data.password = hash;
+    }
     try {
       const updatedUser = await User.updateOne(
         { _id: req.params.id },
