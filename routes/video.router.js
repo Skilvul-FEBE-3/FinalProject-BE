@@ -18,8 +18,8 @@ router.get('/:id', getVideoById);
 router.post('/', verifyToken, adminOnly, addVideo);
 router.patch('/:id', verifyToken, adminOnly, updateVideoById);
 router.delete('/:id', verifyToken, adminOnly, deleteVideoById);
-router.get('/:id/comment', verifyToken, getAllCommentByVideo);
+router.get('/:id/comment', getAllCommentByVideo);
 router.post('/:id/comment', verifyToken, addComment);
-router.delete('/:id/comment/:commentID', verifyToken, deleteComment);
+router.delete('/:id/comment/:commentID', verifyToken, adminOnly, deleteComment);
 
 module.exports = router;
