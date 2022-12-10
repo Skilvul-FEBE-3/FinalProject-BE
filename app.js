@@ -28,7 +28,7 @@ app.use(
 );
 app.use(
   cors({
-    credentials: false,
+    credentials: true,
     origin: [
       'https://final-project-fe-mental-hack.vercel.app',
       'http://127.0.0.1:5173',
