@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const videoSchema = new Schema({
@@ -26,7 +26,7 @@ const videoSchema = new Schema({
       },
       postedBy: {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: 'User',
       },
       dateCreated: {
         type: Date,
@@ -57,7 +57,7 @@ const videoSchema = new Schema({
 //   },
 // });
 
-const Video = mongoose.model("Video", videoSchema);
+const Video = mongoose.model('Video', videoSchema);
 // const Comment = mongoose.model("Comment", commentSchema);
 
 module.exports = Video;

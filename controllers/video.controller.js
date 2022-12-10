@@ -1,4 +1,4 @@
-const Video = require("../models/video");
+const Video = require('../models/video');
 
 module.exports = {
   getAllVideo: async (req, res) => {
@@ -8,7 +8,7 @@ module.exports = {
       let count = await Video.countDocuments();
       if (judul) {
         count = await Video.countDocuments({
-          judul: { $regex: ".*" + judul + ".*", $options: "i" },
+          judul: { $regex: '.*' + judul + '.*', $options: 'i' },
         });
       }
       // if limit not set
@@ -27,7 +27,7 @@ module.exports = {
         .exec();
       if (judul) {
         video = await Video.find({
-          judul: { $regex: ".*" + judul + ".*", $options: "i" },
+          judul: { $regex: '.*' + judul + '.*', $options: 'i' },
         })
           .limit(limit * 1)
           .skip((page - 1) * limit)
@@ -49,7 +49,7 @@ module.exports = {
       const video = await Video.findById(id);
 
       res.status(200).json({
-        message: "Sukses mendapatkan data video",
+        message: 'Sukses mendapatkan data video',
         data: video,
       });
     } catch (error) {
@@ -64,7 +64,7 @@ module.exports = {
     video.save();
 
     res.status(200).json({
-      message: "Video baru berhasil ditambahkan!",
+      message: 'Video baru berhasil ditambahkan!',
     });
   },
 
@@ -77,7 +77,7 @@ module.exports = {
     await video.save();
 
     res.status(200).json({
-      message: "Data berhasil diupdate!",
+      message: 'Data berhasil diupdate!',
     });
 
     video.save();
@@ -90,8 +90,8 @@ module.exports = {
     await video.remove();
 
     res.json({
-      message: "Data yang dipilih berhasil dihapus!",
-      data: "terhapus",
+      message: 'Data yang dipilih berhasil dihapus!',
+      data: 'terhapus',
     });
   },
 
@@ -101,7 +101,7 @@ module.exports = {
 
     if (!commentContent) {
       res.status(400).json({
-        message: "Comment harus diisi",
+        message: 'Comment harus diisi',
       });
       return;
     }
@@ -118,7 +118,7 @@ module.exports = {
     await video.save();
 
     res.status(200).json({
-      message: "Data berhasil diupdate!",
+      message: 'Data berhasil diupdate!',
     });
 
     video.save();
@@ -129,11 +129,14 @@ module.exports = {
       const { id } = req.params;
       const video = await Video.findById(
         id,
-        "-_id -link -judul -deskripsi -tanggalUpload"
+        '-_id -link -judul -deskripsi -tanggalUpload'
+      ).populate(
+        'comment.postedBy',
+        '-_id -email -password -role -profile_url -__v'
       );
 
       res.status(200).json({
-        message: "Sukses mendapatkan data video",
+        message: 'Sukses mendapatkan data video',
         data: video,
       });
     } catch (error) {
@@ -154,7 +157,7 @@ module.exports = {
     await video.save();
 
     res.status(200).json({
-      message: "Data berhasil diupdate!",
+      message: 'Data berhasil diupdate!',
     });
   },
 };
